@@ -1,17 +1,20 @@
-**FDMR Monitor is a "web dashboard" for FreeDMR servers by OA4DOA.**
+**Dashboard for FreeDMR Servers**
+***This version has been forked from FDMR Monitor by OA4DOA.***
 
-***This version has been forked from HBMonitor V2 by SP2ONG 2019-2022***
+!screenshot.png
 
-Some of the changes in FDMR Monitor:
-- TG Count page added.
-- Config file added.
-- It's integrated with SQLite database.
-- Improved usage of memory and CPU.
-- Broadcasting groups has been added to save server's resources.
-- JavaScript code was added to support broadcasting groups.
-- The code has been updated to HTML5.
-- Static and single TG's page added.
-- Data QSO's now are showed in the dashboard.
+## Changes to the Dashboard
+
+- **Responsive Dashboard**: The dashboard is now fully responsive and adapts to different screen sizes and devices.
+- **Dark and Light Mode**: Users can now switch between dark and light mode for a more comfortable viewing experience.
+- **Multi-Language Support**: The dashboard now supports multiple languages, making it more accessible to users around the world.
+- **Active QSOs, Connected Repeaters, Hotspots, and Bridges**: The main page of the dashboard now displays the number of active QSOs, connected repeaters, hotspots, and bridges.
+- **Integrated Options Calculator**: An options calculator has been integrated into the dashboard for easy access and use.
+- **Bridge and Talkgroup Info Pages**: The info pages for bridges and talkgroups now fetch data directly from the FreeDMR main servers.
+- **Real-Time Server Testing**: The info page for World Wide Servers now tests each server in real-time to provide up-to-date information.
+
+
+## Install Instructions
 
 FDMR Monitor has been tested on Debian v10 and v11
 
@@ -75,6 +78,12 @@ php 7.x running on the server.
     sudo python3 mon_db.py
     sudo systemctl start fdmr_mon
 
+
+---
+
+**FDMR Monitor by OA4DOA**
+
+FDMR Monitor for FreeDMR Servera based on HBMonv2 https://github.com/yuvelq/FDMR-Monitor 
 
 ---
 
