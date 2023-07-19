@@ -1,7 +1,8 @@
 **Dashboard for FreeDMR Servers**
+
+!Dashboard screeshot.png
 ***This version has been forked from FDMR Monitor by OA4DOA.***
 
-!screenshot.png
 
 ## Changes to the Dashboard
 
