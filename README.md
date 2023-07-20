@@ -24,7 +24,7 @@ This version of FDMR Monitor requires a web server like apache2, lighttpd and
 php 7.x running on the server.
 
     cd /opt
-    sudo git clone https://github.com/yuvelq/FDMR-Monitor
+    sudo git clone https://github.com/CS8ABG/FDMR-Monitor.git
     cd FDMR-Monitor
     sudo chmod +x install.sh
     sudo ./install.sh
