@@ -43,9 +43,6 @@
                         <li>
                             <a href="?p=wwbridges" class="dropdown-item" id="nav_brdglst"></a>
                         </li>
-                        <li>
-                            <a href="?p=wwservers" class="dropdown-item" id="nav_srvlst"></a>
-                        </li>
                     </ul>
                 </li>
             </ul>
