@@ -3,16 +3,16 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header border-transparent">
-            <h3 class="card-title" id="tbl_tgs">TalkGroups</h3>
+            <h3 class="card-title" id="tbl_tgs"></h3>
           </div>
           <div class="card-body p-0">
-            <div class="table-responsive">
-              <table class="table m-0 table-striped table-sm">
+            <div class="table-responsive p-3">
+              <table class="table m-0 table-striped table-sm table-bordered" >
                 <thead>
                   <tr>
-                    <th id="tbrdgs_country">País</th>
-                    <th id="tbrdgs_tg">TalkGroup</th>
-                    <th id="tbrdgs_name">Nome</th>
+                    <th id="tbrdgs_tg"></th>
+                    <th id="tbrdgs_name"></th>
+                    <th id="tbrdgs_country"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -47,12 +47,13 @@
                         usort($tableRows, function($a, $b) {
                             return strcmp($a[0], $b[0]);
                         });
+                        $numofrows = count($tableRows);
                         // Loop through the tableRows array and output each row as a table row
                         foreach ($tableRows as $row) {
                             echo '<tr>';
-                            echo '<td>' . $row[0] . '</td>';
                             echo '<td>' . $row[1] . '</td>';
                             echo '<td>' . $row[2] . '</td>';
+                            echo '<td>' . $row[0] . '</td>';
                             echo '</tr>';
                         }
 
@@ -62,6 +63,9 @@
                     }
                   ?>
                 </tbody>
+                <tfoot class="text-center">
+                    <td colspan="3"><span>Number of TalkGroups:</span> <?php echo $numofrows; ?></td>
+                </tfoot>
               </table>
             </div>
           </div>
