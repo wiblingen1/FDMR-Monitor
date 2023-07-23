@@ -13,7 +13,6 @@
 - **Active QSOs, Connected Repeaters, Hotspots, and Bridges**: The main page of the dashboard now displays the number of active QSOs, connected repeaters, hotspots, and bridges.
 - **Integrated Options Calculator**: An options calculator has been integrated into the dashboard for easy access and use.
 - **Bridge and Talkgroup Info Pages**: The info pages for bridges and talkgroups now fetch data directly from the FreeDMR main servers.
-- **Real-Time Server Testing**: The info page for World Wide Servers now tests each server in real-time to provide up-to-date information.
 
 
 ## Install Instructions
