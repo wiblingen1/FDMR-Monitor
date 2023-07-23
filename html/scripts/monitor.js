@@ -338,6 +338,8 @@ fetch('translations.json')
             const translation = translations[key][selectedLanguage];
             if (element.getAttribute('data-bs-toggle') === 'tooltip') {
               element.setAttribute('data-bs-title', translation);
+            } else if (element.tagName === 'INPUT') {
+              element.setAttribute('placeholder', translation);
             } else {
               element.textContent = translation;
             }
@@ -346,7 +348,7 @@ fetch('translations.json')
   
         // Re-initialize Bootstrap tooltips after translation
         $('[data-bs-toggle="tooltip"]').tooltip();
-      }
+    }
 
     // Translate the page on initial load
     translatePage();
