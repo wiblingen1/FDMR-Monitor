@@ -15,7 +15,7 @@
                                         class="far fa-question-circle" data-bs-toggle="tooltip" data-bs-placement="top"
                                         data-bs-html="true" data-bs-title="" id="calchlptype"></i></p>
                             </div>
-                            <select class="form-control" id="modeSelector" onchange="toggleTimeslotTable()">
+                            <select class="form-control form-control-sm" id="modeSelector" onchange="toggleTimeslotTable()">
                                 <option value="Duplex">Duplex</option>
                                 <option value="Simplex">Simplex</option>
                             </select>
@@ -24,10 +24,10 @@
 
                     <div class="row justify-content-center">
                         <div id="timeslot1col" class="col-4">
-                            <table class="table table-sm border">
+                            <table class="table table-sm border align-middle">
                                 <thead>
                                     <tr>
-                                        <th colspan="2" style="text-align: center;" class="align-middle">Time Slot
+                                        <th colspan="3" style="text-align: center;" class="align-middle">Time Slot
                                             1&nbsp;&nbsp;&nbsp;<i class="far fa-question-circle"
                                                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true"
                                                 data-bs-title="" id="calchlpts1"></i>
@@ -37,20 +37,21 @@
                                 <tbody id="timeslotTable">
                                     <tr>
                                         <td class="align-middle text-nowrap">TG 1:</td>
-                                        <td><input type="number" class="form-control" min="0" step="1"></td>
+                                        <td><input type="number" class="form-control form-control-sm" min="0" step="1"></td>
+                                        <td><button class="btn" onclick="removeRow(this)"><i class="fas fa-times text-danger"></i></button></td>
                                     </tr>
                                 </tbody>
                             </table>
                             <div class="row justify-content-center">
-                                <button class="btn btn-primary" onclick="addRow('timeslotTable')"
+                                <button class="btn btn-primary btn-xs" onclick="addRow('timeslotTable')"
                                     id="calc_addts1"></button>
                             </div>
                         </div>
                         <div id="timeslot2col" class="col-4">
-                            <table class="table table-sm border">
+                            <table class="table table-sm border align-middle">
                                 <thead>
                                     <tr>
-                                        <th colspan="2" style="text-align: center;" class="align-middle">Time Slot
+                                        <th colspan="3" style="text-align: center;" class="align-middle">Time Slot
                                             2&nbsp;&nbsp;&nbsp;<i class="far fa-question-circle"
                                                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true"
                                                 data-bs-title="" id="calchlpts2"></i>
@@ -60,19 +61,20 @@
                                 <tbody id="timeslotTable2">
                                     <tr>
                                         <td class="align-middle text-nowrap">TG 1:</td>
-                                        <td><input type="number" class="form-control" min="0" step="1"></td>
+                                        <td><input type="number" class="form-control form-control-sm" min="0" step="1"></td>
+                                        <td><button class="btn" onclick="removeRow(this)"><i class="fas fa-times text-danger"></i></button></td>
                                     </tr>
                                 </tbody>
                             </table>
                             <div class="row justify-content-center">
-                                <button class="btn btn-primary" onclick="addRow('timeslotTable2')"
+                                <button class="btn btn-primary btn-xs" onclick="addRow('timeslotTable2')"
                                     id="calc_addts2"></button>
                             </div>
                         </div>
                     </div>
                     <div class="row justify-content-center">
-                        <div class="col-6">
-                            <table class="table table-sm border mt-4">
+                        <div class="col-8">
+                            <table class="table table-sm table-sm border mt-4">
                                 <tbody>
                                     <tr>
                                         <td class="align-middle text-nowrap"><span
@@ -80,7 +82,7 @@
                                                 class="far fa-question-circle" data-bs-toggle="tooltip"
                                                 data-bs-placement="top" data-bs-html="true" data-bs-title=""
                                                 id="calchlpdtg"></i></td>
-                                        <td><input type="number" class="form-control" min="0" step="1" id="dialTGInput"
+                                        <td><input type="number" class="form-control form-control-sm" min="0" step="1" id="dialTGInput"
                                                 value="0" oninput="toggleTimeslot2(this.value)"></td>
                                     </tr>
                                     <tr>
@@ -90,10 +92,11 @@
                                                 data-bs-placement="top" data-bs-html="true" data-bs-title=""
                                                 id="calchlpvoice"></i></td>
                                         <td>
-                                            <select class="form-control" id="voiceSelect"
+                                            <select class="form-control form-control-sm" id="voiceSelect"
                                                 onchange="toggleLanguageDropdown()">
+                                                <option value="-1" id="calc_voicesrv" selected></option>
                                                 <option value="0" id="calc_voiceoff"></option>
-                                                <option value="1" selected id="calc_voiceon"></option>
+                                                <option value="1" id="calc_voiceon"></option>
                                             </select>
                                         </td>
                                     </tr>
@@ -104,7 +107,7 @@
                                                 data-bs-placement="top" data-bs-html="true" data-bs-title=""
                                                 id="calchlplang"></i></td>
                                         <td>
-                                            <select class="form-control" id="languageselect">
+                                            <select class="form-control form-control-sm" id="languageselect">
                                                 <option value="en_GB">English (en_GB)</option>
                                                 <option value="en_US">English (en_US)</option>
                                                 <option value="es_ES">Spanish (es_ES)</option>
@@ -129,8 +132,9 @@
                                                 data-bs-placement="top" data-bs-html="true" data-bs-title=""
                                                 id="calchlpsmode"></i></td>
                                         <td>
-                                            <select class="form-control" id="singleModeSelect">
-                                                <option value="0" selected id="calc_smodeoff"></option>
+                                            <select class="form-control form-control-sm" id="singleModeSelect">
+                                                <option value="-1" id="calc_smodesrv" selected></option>
+                                                <option value="0" id="calc_smodeoff"></option>
                                                 <option value="1" id="calc_smodeon"></option>
                                             </select>
                                         </td>
@@ -141,8 +145,8 @@
                                                 class="far fa-question-circle" data-bs-toggle="tooltip"
                                                 data-bs-placement="top" data-bs-html="true" data-bs-title=""
                                                 id="calchlpstgto"></i></td>
-                                        <td><input type="number" class="form-control" min="0" step="1" id="timeoutInput"
-                                                value="10"></td>
+                                        <td><input type="number" class="form-control form-control-sm" min="0" step="1" id="timeoutInput"
+                                                value="0"></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -160,9 +164,9 @@
                             <div class="row justify-content-center">
                                 <p class="mb-1"><b>DMR Gateway</b></p>
                             </div>
-                            <textarea class="form-control text-sm" id="generatedTextWithQuotes" rows="2"
+                            <textarea class="form-control text-sm form-control-sm" id="generatedTextWithQuotes" rows="2"
                                 readonly></textarea>
-                            <div class="row justify-content-center">
+                            <div class="row justify-content-center mt-4 mb-4">
                                 <button class="btn btn-primary mt-2"
                                     onclick="copyToClipboard('generatedTextWithQuotes')" id="calc_copy1">
                                 </button>
@@ -172,9 +176,9 @@
                             <div class="row justify-content-center">
                                 <p class="mb-1"><b>DMR Options=</b></p>
                             </div>
-                            <textarea class="form-control text-sm" id="generatedTextWithoutQuotes" rows="2"
+                            <textarea class="form-control text-sm form-control-sm" id="generatedTextWithoutQuotes" rows="2"
                                 readonly></textarea>
-                            <div class="row justify-content-center">
+                            <div class="row justify-content-center mt-4 mb-4">
                                 <button class="btn btn-primary mt-2"
                                     onclick="copyToClipboard('generatedTextWithoutQuotes')" id="calc_copy2">
                                 </button>
@@ -193,14 +197,12 @@
     function toggleTimeslotTable() {
         var modeSelector = document.getElementById('modeSelector');
         var timeslot1Col = document.getElementById('timeslot1col');
-        var timeslot2Col = document.getElementById('timeslot2col');
+        
 
         if (modeSelector.value === 'Simplex') {
             timeslot1Col.style.display = 'none';
-            timeslot2Col.style.display = 'block';
         } else {
             timeslot1Col.style.display = 'block';
-            timeslot2Col.style.display = 'block';
         }
 
         updateGeneratedText();
@@ -222,7 +224,7 @@
         var voiceSelect = document.getElementById('voiceSelect');
         var languageRow = document.getElementById('languagerow');
 
-        if (voiceSelect.value === '0') {
+        if (voiceSelect.value !== '1') {
             languagerow.style.display = 'none';
         } else {
             languagerow.style.display = 'table-row';
@@ -234,17 +236,41 @@
     function addRow(tableId) {
         var table = document.getElementById(tableId);
         var rowCount = table.rows.length;
-
         var row = table.insertRow(rowCount);
         var tgCell = row.insertCell(0);
         var timeslotCell = row.insertCell(1);
-
+        var removeCell = row.insertCell(2);
         tgCell.innerHTML = 'TG ' + (rowCount + 1) + ':';
         tgCell.classList.add('align-middle');
-        timeslotCell.innerHTML = '<input type="number" class="form-control" min="0" step="1" onchange="updateGeneratedText()">';
-
-
+        tgCell.classList.add('text-nowrap');
+        timeslotCell.innerHTML = '<input type="number" class="form-control form-control-sm" min="0" step="1" onchange="updateGeneratedText()">';
+        removeCell.innerHTML = '<button class="btn" onclick="removeRow(this)"><i class="fas fa-times text-danger"></i></button>';
         updateGeneratedText();
+    }
+
+    function removeRow(button) {
+        var row = button.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+        updateGeneratedText();
+    }
+
+    function checkDupes() {
+        let inputs = document.querySelectorAll('#timeslotTable input, #timeslotTable2 input');
+        let values = [];
+        for (let i = 0; i < inputs.length; i++) {
+            if (inputs[i].value !== '') {
+                let value = parseInt(inputs[i].value);
+                if (values.includes(value)) {
+                    // If the value is already in the array, show an error message
+                    //alert('You cannot enter the same number twice!');
+                    // Reset the value of the input field
+                    inputs[i].value = '';
+                    updateGeneratedText();
+                } else {
+                    values.push(value);
+                }
+            }
+        }
     }
 
     function copyToClipboard(elementId) {
@@ -262,11 +288,8 @@
         var languageSelect = document.getElementById('languageselect');
         var singleModeSelect = document.getElementById('singleModeSelect');
         var timeoutInput = document.getElementById('timeoutInput');
-
         var timeslots1 = [];
         var timeslots2 = [];
-
-        // Get Timeslot 1 values
         for (var i = 0; i < timeslotTable.rows.length; i++) {
             var row = timeslotTable.rows[i];
             var timeslot = row.cells[1].querySelector('input').value;
@@ -274,8 +297,6 @@
                 timeslots1.push(timeslot);
             }
         }
-
-        // Get Timeslot 2 values
         for (var i = 0; i < timeslotTable2.rows.length; i++) {
             var row = timeslotTable2.rows[i];
             var timeslot = row.cells[1].querySelector('input').value;
@@ -283,16 +304,14 @@
                 timeslots2.push(timeslot);
             }
         }
-
         var dialTGValue = dialTGInput.value;
         var voiceValue = voiceSelect.value;
         var languageValue = languageSelect.value;
         var singleModeValue = singleModeSelect.value;
         var timeoutValue = timeoutInput.value;
-
-        // Generate the text with quotes
+        var modeSelectorValue = modeSelector.value;
         var generatedTextWithQuotes = 'Options="';
-        if (timeslots1.length > 0) {
+        if (timeslots1.length > 0 && modeSelectorValue === 'Duplex') {
             generatedTextWithQuotes += 'TS1=' + timeslots1.join(',') + ';';
         }
         if (timeslots2.length > 0 && dialTGValue <= 0) {
@@ -301,18 +320,21 @@
         if (dialTGValue > 0) {
             generatedTextWithQuotes += 'DIAL=' + dialTGValue + ';';
         }
-        generatedTextWithQuotes += 'VOICE=' + voiceValue + ';';
+        if (voiceValue !== '-1') {
+            generatedTextWithQuotes += 'VOICE=' + voiceValue + ';';
+        }
         if (voiceValue === '1') {
             generatedTextWithQuotes += 'LANG=' + languageValue + ';';
         }
-        if (singleModeValue === '1') {
+        if (singleModeValue !== '-1') {
             generatedTextWithQuotes += 'SINGLE=' + singleModeValue + ';';
         }
-        generatedTextWithQuotes += 'TIMER=' + timeoutValue + '"';
-
+        if (timeoutValue > 0) {
+            generatedTextWithQuotes += 'TIMER=' + timeoutValue + '"';
+        }
         // Generate the text without quotes
         var generatedTextWithoutQuotes = '';
-        if (timeslots1.length > 0) {
+        if (timeslots1.length > 0 && modeSelectorValue === 'Duplex') {
             generatedTextWithoutQuotes += 'TS1=' + timeslots1.join(',') + ';';
         }
         if (timeslots2.length > 0 && dialTGValue <= 0) {
@@ -321,17 +343,21 @@
         if (dialTGValue > 0) {
             generatedTextWithoutQuotes += 'DIAL=' + dialTGValue + ';';
         }
-        generatedTextWithoutQuotes += 'VOICE=' + voiceValue + ';';
+        if (voiceValue !== '-1') {
+            generatedTextWithoutQuotes += 'VOICE=' + voiceValue + ';';
+        }
         if (voiceValue === '1') {
             generatedTextWithoutQuotes += 'LANG=' + languageValue + ';';
         }
-        if (singleModeValue === '1') {
+        if (singleModeValue !== '-1') {
             generatedTextWithQuotes += 'SINGLE=' + singleModeValue + ';';
         }
-        generatedTextWithoutQuotes += 'TIMER=' + timeoutValue;
-
+        if (timeoutValue > 0) {
+            generatedTextWithoutQuotes += 'TIMER=' + timeoutValue;
+        }
         document.getElementById('generatedTextWithQuotes').value = generatedTextWithQuotes;
         document.getElementById('generatedTextWithoutQuotes').value = generatedTextWithoutQuotes;
+        checkDupes();
     }
 
     // Update generated text when inputs change
@@ -342,4 +368,6 @@
 
     // Initial update of generated text
     updateGeneratedText();
+    toggleTimeslotTable();
+    toggleLanguageDropdown();
 </script>
