@@ -4,13 +4,12 @@
 {% set counthotspots = namespace(value=0) %}
 {% set countbridges = namespace(value=0) %}
 
-{% if _table['MASTERS']|length >0 %}
   {% for _master in _table['MASTERS'] %}
     {% for _client, _cdata in _table['MASTERS'][_master]['PEERS'].items() %}
-      {% if _client < 900000 %}
+    {% if _client|string|length == 6 and _cdata['RX_FREQ'] != 'N/A' and _cdata['TX_FREQ'] != 'N/A' %}
         {% set countrepeaters.value = countrepeaters.value + 1 %}
       {% endif %}
-      {% if _client > 999999 and _cdata['RX_FREQ'] != 'N/A' and _cdata['TX_FREQ'] != 'N/A' %}
+    {% if _client|string|length >= 7 and _cdata['RX_FREQ'] != 'N/A' and _cdata['TX_FREQ'] != 'N/A' %}
         {% set counthotspots.value = counthotspots.value + 1 %}
       {% endif %}
       {% if _cdata['RX_FREQ'] == 'N/A' and _cdata['TX_FREQ'] == 'N/A' %}
@@ -27,7 +26,7 @@
     {% endfor %}
   {% endfor %}
 
-  {% for _peer, _pdata  in _table['PEERS'].items() %}
+{% for _peer, _pdata in _table['PEERS'].items() %}
     {% if _pdata[1]['TS'] == True or _pdata[2]['TS'] == True %}
       {% if _pdata[1]['TRX'] == "RX" %}
         {% set countcon.value = countcon.value + 1 %}
@@ -38,15 +37,15 @@
     {% endif %}
   {% endfor %}
 
-  {% if _table['OPENBRIDGES']|length >0 %}
+{% if _table['OPENBRIDGES']|length > 0 %}
     {% for _openbridge in _table['OPENBRIDGES'] %}
       {% set rx = namespace(value=0) %}
-      {% if _table['OPENBRIDGES'][_openbridge]['STREAMS']|length >0 %}
-        {% for entry in _table['OPENBRIDGES'][_openbridge]['STREAMS'] if _table['OPENBRIDGES'][_openbridge]['STREAMS'][entry][0]=='RX' %}
+    {% if _table['OPENBRIDGES'][_openbridge]['STREAMS']|length > 0 %}
+      {% for entry in _table['OPENBRIDGES'][_openbridge]['STREAMS'] if _table['OPENBRIDGES'][_openbridge]['STREAMS'][entry][0] == 'RX' %}
           {% set rx.value=1 %}
         {% endfor %}
         {% if rx.value == 1 %}
-          {% for entry in _table['OPENBRIDGES'][_openbridge]['STREAMS']  if _table['OPENBRIDGES'][_openbridge]['STREAMS'][entry][0] == 'RX' %}
+        {% for entry in _table['OPENBRIDGES'][_openbridge]['STREAMS'] if _table['OPENBRIDGES'][_openbridge]['STREAMS'][entry][0] == 'RX' %}
             {% set countcon.value = countcon.value + 1 %}
           {% endfor %}
         {% endif %}
@@ -54,14 +53,14 @@
     {% endfor %}
   {% endif %}
 
-{% else %}
+  {% if _table['MASTERS']|length == 0 %}
   <div class="preloader flex-column justify-content-center align-items-center">
     <i class="fas fa-2x fa-sync-alt fa-spin"></i>
     <span class="info-box-text" id="pre_wait"></span>
   </div>
 {% endif %}
 
-<div class="row">
+<div class="row justify-content-center">
   <div class="col-lg-3 col-6">
     <div class="small-box bg-info">
       <div class="inner">
@@ -73,7 +72,6 @@
       </div>
     </div>
   </div>
-
   <div class="col-lg-3 col-6">
     <div class="small-box bg-success">
       <div class="inner">
@@ -85,7 +83,6 @@
       </div>
     </div>
   </div>
-
   <div class="col-lg-3 col-6">
     <div class="small-box bg-warning">
       <div class="inner">
@@ -97,7 +94,6 @@
       </div>
     </div>
   </div>
-
   <div class="col-lg-3 col-6">
     <div class="small-box bg-danger">
       <div class="inner">
@@ -114,7 +110,7 @@
   <!-- Activity Table-->
   <div class="row">
     <div class="col-12">
-      <div class="card" style="height: 195px;"> <!-- 45px header + 75px per line -->
+      <div class="card"> <!-- 45px header + 75px per line -->
         <div class="card-header">
           <h3 class="card-title" id="act_tbl"></h3>
         </div>
@@ -272,16 +268,18 @@
                 <td><b>{{ itm[6] }}</b></td>
                 <td>&nbsp;</td>
                 {% else %}
-                <td><b><a target="_blank" href=https://qrz.com/db/{{itm[7][0]}}>{{ itm[7][0] }}</a></b><span>&nbsp;({{
-                    itm[6] }})</span></td>
+                {% set idnum = itm[6]|safe %}
+                {% set ctryusr = idnum[0:3] %}
+                <td><img src="/flags/{{ ctryusr }}.png" onerror="this.src='/flags/world.png'">&nbsp;<b><a target="_blank" href=https://qrz.com/db/{{itm[7][0]}}>{{ itm[7][0] }}</a></b>&nbsp;<span class="badge badge-info">{{
+                    itm[6] }}</span></td>
                 <td><b>{{ itm[7][1] }}</b></td>
                 {% endif %}
-                <td class="text-warning"><b>{{ itm[4] }}</b></td>
+                <td><a href=""><b>{{ itm[4] }}</b></a></td>
                 <td>
                   {% set tgnum = itm[4]|safe %}
                   {% if tgnum|length > 2 %}
                   {% set ctrynum = tgnum[0:3] %}
-                  <img src="/flags/{{ ctrynum }}.png">
+                  <img src="/flags/{{ ctrynum }}.png" onerror="this.src='/flags/world.png'">
                   {% else %}
                   <img src="/flags/world.png">
                   {% endif %}
@@ -325,6 +323,7 @@
 <!-- Connected systems -->
 {% if _table['MASTERS']|length >0 %}
 <div class="row justify-content-center">
+  {% if countrepeaters.value > 0 %}
   <div class="col-md-4 col-12">
     <div class="card">
       <div class="card-header">
@@ -335,7 +334,7 @@
           {% for _master in _table['MASTERS'] %}
           {% if _table['MASTERS'][_master]['PEERS']|length >0 %}
           {% for _client, _cdata in _table['MASTERS'][_master]['PEERS'].items() %}
-          {% if _client < 900000 %} <a target="_blank" href="https://qrz.com/db/{{_cdata['CALLSIGN']}}"
+          {% if _client|string|length == 6 and  _cdata['RX_FREQ'] != 'N/A' and _cdata['TX_FREQ'] != 'N/A' %} <a target="_blank" href="https://qrz.com/db/{{_cdata['CALLSIGN']}}"
             class="badge badge-pill badge-success" style="width: 56px;" data-toggle="tooltip" data-placement="top"
             title="
 ID DMR: {{ _client }}
@@ -357,6 +356,8 @@ Tempo Conetado: {{ _cdata['CONNECTED'] }}"><b>{{_cdata['CALLSIGN']}}</b></a>&nbs
       </div>
     </div>
   </div>
+  {% endif %}
+  {% if counthotspots.value > 0 %}
   <div class="col-md-4 col-12">
     <div class="card">
       <div class="card-header">
@@ -367,7 +368,7 @@ Tempo Conetado: {{ _cdata['CONNECTED'] }}"><b>{{_cdata['CALLSIGN']}}</b></a>&nbs
           {% for _master in _table['MASTERS'] %}
           {% if _table['MASTERS'][_master]['PEERS']|length >0 %}
           {% for _client, _cdata in _table['MASTERS'][_master]['PEERS'].items() %}
-          {% if _client > 999999 and _cdata['RX_FREQ'] != 'N/A' and _cdata['TX_FREQ'] != 'N/A' %}
+          {% if _client|string|length >= 7 and  _cdata['RX_FREQ'] != 'N/A' and _cdata['TX_FREQ'] != 'N/A' %}
           <a target="_blank" href="https://qrz.com/db/{{_cdata['CALLSIGN']}}" class="badge badge-pill badge-success"
             style="width: 56px;" data-toggle="tooltip" data-placement="top" data-html="true" title="
 ID DMR: {{ _client }}
@@ -389,6 +390,8 @@ Tempo Conetado: {{ _cdata['CONNECTED'] }}"><b>{{_cdata['CALLSIGN']}}</b></a>&nbs
       </div>
     </div>
   </div>
+  {% endif %}
+  {% if countbridges.value > 0 %}
   <div class="col-md-4 col-12">
     <div class="card">
       <div class="card-header">
@@ -421,5 +424,6 @@ Tempo Conetado: {{ _cdata['CONNECTED'] }}"><b>{{_cdata['CALLSIGN']}}</b></a>&nbs
       </div>
     </div>
   </div>
+  {% endif %}
 </div>
 {% endif %}

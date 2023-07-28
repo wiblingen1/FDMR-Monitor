@@ -86,11 +86,11 @@ CTABLE = {
     "OPENBRIDGES": {},
     "SETUP": {"LASTHEARD": CONF["GLOBAL"]["LH_INC"]}
     }
-BRIDGES = {}
 BTABLE = {
     "BRIDGES": {},
     "SETUP": {}
     }
+BRIDGES = {}
 BRIDGES_RX = ""
 CONFIG_RX = ""
 LOGBUF = deque(100*[""], 100)
@@ -458,6 +458,26 @@ def add_hb_peer(_peer_conf, _ctable_loc, _peer):
     else:
         _ctable_peer["COLORCODE"] = _peer_conf["COLORCODE"]
 
+    if str(type(_peer_conf["TX_POWER"])).find("bytes") != -1:
+        _ctable_peer["TX_POWER"] = _peer_conf["TX_POWER"].decode("utf-8").strip()
+    else:
+        _ctable_peer["TX_POWER"] = _peer_conf["TX_POWER"]
+
+    if str(type(_peer_conf["LATITUDE"])).find("bytes") != -1:
+        _ctable_peer["LATITUDE"] = _peer_conf["LATITUDE"].decode("utf-8").strip()
+    else:
+        _ctable_peer["LATITUDE"] = _peer_conf["LATITUDE"]
+
+    if str(type(_peer_conf["LONGITUDE"])).find("bytes") != -1:
+        _ctable_peer["LONGITUDE"] = _peer_conf["LONGITUDE"].decode("utf-8").strip()
+    else:
+        _ctable_peer["LONGITUDE"] = _peer_conf["LONGITUDE"]
+
+    if str(type(_peer_conf["HEIGHT"])).find("bytes") != -1:
+        _ctable_peer["HEIGHT"] = _peer_conf["HEIGHT"].decode("utf-8").strip()
+    else:
+        _ctable_peer["HEIGHT"] = _peer_conf["HEIGHT"]
+
     _ctable_peer["CONNECTION"] = _peer_conf["CONNECTION"]
     _ctable_peer["CONNECTED"] = time_str(_peer_conf["CONNECTED"], "since")
 
@@ -802,8 +822,7 @@ def build_tgstats():
                     continue
                 for peer in CTABLE["MASTERS"][system["SYSTEM"]]["PEERS"]:
                     CTABLE["MASTERS"][system["SYSTEM"]]["PEERS"][peer]["SINGLE_TS"+str(system["TS"])] = {
-                        "TGID": int_id(system["TGID"]), "TO": time_str(system["TIMER"],"to")
-                    }
+                        "TGID": int_id(system["TGID"]), "TO": time_str(system["TIMER"],"to")}
 
 
 def timeout_clients():
@@ -1190,7 +1209,7 @@ def cleaning_loop():
 
 #######################################################################
 if __name__ == "__main__":
-    # Configure logger
+    # Create logger
     log_conf = {
         'PATH': CONF["LOG"]["PATH"],
         'LOG_FILE': CONF["LOG"]["LOG_FILE"],
@@ -1203,10 +1222,10 @@ if __name__ == "__main__":
     logger = create_logger(log_conf)
 
     logger.info("monitor.py starting up")
-    logger.info("\n\n\tCopyright (c) 2016-2023\n\tThe Regents of the K0USY Group. All rights "
+    logger.info("\n\n\tCopyright (c) 2016-2022\n\tThe Regents of the K0USY Group. All rights "
                 "reserved.\n\n\tPython 3 port:\n\t2019 Steve Miller, KC1AWV <smiller@kc1awv.net>"
-                "\n\n\tFDMR-Monitor OA4DOA\n\n")
-    
+                "\n\n\tFDMR-Monitor OA4DOA 2022\n\n")
+
     # Create an instance of MoniDB
     db_conn = MoniDB("mon.db")
 
@@ -1229,7 +1248,7 @@ if __name__ == "__main__":
     update_stats = task.LoopingCall(build_stats)
     update_stats.start((CONF["WS"]["FREQ"])).addErrback(error_hdl)
 
-    # Start the timout loop
+    # Start the timeout loop
     if CONF["WS"]["CLT_TO"]:
         timeout = task.LoopingCall(timeout_clients)
         timeout.start(10).addErrback(error_hdl)
@@ -1263,10 +1282,11 @@ if __name__ == "__main__":
     # and add load ssl module in line number 43: from twisted.internet import reactor, task, ssl
     #
     # put certificate https://letsencrypt.org/ used in apache server
-    #certificate = ssl.DefaultOpenSSLContextFactory("/etc/letsencrypt/live/hbmon.dmrserver.org/privkey.pem", "/etc/letsencrypt/live/hbmon.dmrserver.org/cert.pem")
-    #dashboard_server = dashboardFactory("wss://*:9000")
-    #dashboard_server.protocol = dashboard
-    #reactor.listenSSL(9000, dashboard_server,certificate)
+    # certificate = ssl.DefaultOpenSSLContextFactory("/etc/letsencrypt/live/hbmon.dmrserver.org/privkey.pem",
+    # "/etc/letsencrypt/live/hbmon.dmrserver.org/cert.pem")
+    # dashboard_server = dashboardFactory("wss://*:9000")
+    # dashboard_server.protocol = dashboard
+    # reactor.listenSSL(9000, dashboard_server,certificate)
 
     logger.info(f'Starting webserver on port {CONF["WS"]["WS_PORT"]} with SSL = {CONF["WS"]["USE_SSL"]}')
 

@@ -26,9 +26,22 @@ if (!isset($_SESSION['preloader_displayed'])) {
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <link rel="stylesheet" href="plugins/adminlte/css/adminlte.min.css">
+  <style>
+    @media (min-width: 768px) {
+      .table-responsive {
+        overflow-x: auto;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .table-responsive {
+        zoom: 0.5; 
+      }
+    }
+  </style>
 </head>
 
-<body class="hold-transition dark-mode layout-top-nav layout-navbar-fixed text-sm">
+<body class="hold-transition dark-mode layout-top-nav layout-navbar-fixed text-sm layout-footer-fixed" style="zoom: 85%;">
   <div class="wrapper">
     <?php if ($display_preloader): ?>
     <div class="preloader flex-column justify-content-center align-items-center">
@@ -55,6 +68,9 @@ if (!isset($_SESSION['preloader_displayed'])) {
           $page = isset($_GET['p']) ? $_GET['p'] : 'home';
               include 'include/' . $page . '.php';
         ?>
+        <div>
+          <br>
+        </div>
       </div>
     </div>
     <footer class="main-footer text-sm">
