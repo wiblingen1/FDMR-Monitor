@@ -115,6 +115,8 @@ def mk_config(cfg_file):
                     }
             elif section == "DEFAULT":
                 pass
+            elif section == "DASHBOARD":
+                pass
 
             else:
                 logger.warning(f"Unrecognized section in config file: {section}.")
