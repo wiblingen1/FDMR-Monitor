@@ -47,6 +47,7 @@ php 7.x running on the server.
     cd /opt
     sudo git clone https://github.com/CS8ABG/FDMR-Monitor.git
     cd FDMR-Monitor
+    sudo git checkout Self_Service  
     sudo chmod +x install.sh
     sudo ./install.sh
     sudo cp fdmr-mon_SAMPLE.cfg fdmr-mon.cfg
